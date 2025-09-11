@@ -77,7 +77,7 @@
 - **Advanced Data Types** (to come later): lists, tuples, sets, dictionaries.
 
 
-## Python Operators
+## Lecture 4: Python Operators
 
 ### 🔹 Introduction
 
@@ -157,7 +157,7 @@ print(x or y)   # True
 print(not x)    # False
 
 
-## Python Control Flow – Conditional Statements
+## Lecture 5: Python Control Flow – Conditional Statements
 
 ### 🌟 Introduction
 
@@ -241,7 +241,7 @@ print(not x)    # False
 - Input: `-1` → Zero or Negative
 
 
-## 🔁 Loops in Python
+## Lecture 6: 🔁 Loops in Python
 
 ### 🌟 Introduction
 - Loops = repeat a block of code multiple times.
@@ -351,7 +351,7 @@ Loop inside another loop.
 
 👦 “Imagine classrooms (outer loop) and students inside (inner loop). You go class by class, student by student.”
 
-## 🗂️ Python Data Structures – Lists
+## Lecture 7:🗂️ Python Data Structures – Lists
 
 ### 📌 What is a List?
 - **Definition**: Ordered, mutable collection of items.
@@ -466,7 +466,7 @@ evens = [x for x in range(10) if x % 2 == 0]
 - Infinite loops if using `while` incorrectly.
 `
 
-## 🗂️ Python Data Structures – Tuples
+## Lecture 8:🗂️ Python Data Structures – Tuples
 
 ### 📌 What are Tuples?
 - **Ordered, immutable collection** of items.
@@ -603,7 +603,7 @@ for sub in nested:
 
 
 
-## 🗂️ Python Data Structures – Dictionaries
+## Lecture 9:🗂️ Python Data Structures – Dictionaries
 
 ### 📌 Introduction
 
@@ -760,7 +760,7 @@ Dictionaries are **foundational** for data handling in Python. In Generative AI,
 ---
 
 
-## 🗂️ Python – Functions
+## Lecture 10:🗂️ Python – Functions
 
 ### 📌 What is a Function?
 
@@ -1273,7 +1273,7 @@ Now let’s polish it into clean **Obsidian-ready notes** with explanations, exa
 ---
 
 
-## 🐍 Python – Modules & Packages
+## Lecture 11:🐍 Python – Modules & Packages
 
 ### 📌 What are Modules & Packages?
 
@@ -1410,7 +1410,7 @@ Got it ✅ Let’s turn this lecture into **clear Obsidian notes** with code sni
 
 ---
 
-## 🐍 Python Standard Library Overview
+## Lecture 12:🐍 Python Standard Library Overview
 
 ### 📌 What is the Standard Library?
 
@@ -1580,7 +1580,7 @@ if match:
 
 ---
 
-## 📂 Python File Operations
+## Lecture 13:📂 Python File Operations
 
 ### 🔹 Introduction
 
@@ -1730,7 +1730,7 @@ with open("example.txt", "w+") as file:
 
 ---
 
-## 📘 File & Directory Handling with `os` in Python
+## Lecture 14:📘 File & Directory Handling with `os` in Python
 
 ### 🔑 Key Takeaways
 
@@ -1878,7 +1878,7 @@ print("Absolute Path:", os.path.abspath(file_path))
 ---
 
 
-## 📘 Exception Handling in Python
+## Lecture 15:📘 Exception Handling in Python
 
 ### 🔑 Key Takeaways
 
@@ -2158,7 +2158,7 @@ Invalid age: Age cannot be negative
 ---
 
 
-## 📘 Object-Oriented Programming (OOP): Classes & Objects
+## Lecture 16:📘 Object-Oriented Programming (OOP): Classes & Objects
 
 ### 🔑 Key Takeaways
 
@@ -2319,7 +2319,7 @@ print("Circumference:", c1.circumference())  # 31.41
 
 ---
 
-## 📘 Inheritance in Python
+## Lecture 17:📘 Inheritance in Python
 
 ### 🔑 Key Takeaways
 
@@ -2459,7 +2459,7 @@ print(book1.title, book1.author, book1.pages)
 
 ---
 
-## 📘 Polymorphism in Python
+## Lecture 18:📘 Polymorphism in Python
 
 ### 🔑 Key Takeaways
 
@@ -2618,7 +2618,7 @@ print(des.work())  # Designing UI
 
 ---
 
-## 📘 Encapsulation in Python
+## Lecture 19:📘 Encapsulation in Python
 ### 🔑 Key Takeaways
 
 - **Encapsulation** = bundling data (variables) + methods (functions) in one unit (class).
@@ -2795,7 +2795,7 @@ s.set_marks(120)      # Invalid marks
 
 ---
 
-## 📘 Abstraction in Python
+## Lecture 20:📘 Abstraction in Python
 
 ### 🔑 Key Takeaways
 
@@ -2918,7 +2918,7 @@ Here’s the **complete Obsidian note** in your finalized template:
 
 ---
 
-## 📘 Magic Methods (Dunder Methods) in Python
+## Lecture 21:📘 Magic Methods (Dunder Methods) in Python
 
 ### 🔑 Key Takeaways
 - Magic methods = **dunder methods** (start & end with `__`).
@@ -3049,7 +3049,7 @@ print(repr(s1))   # Student(name='Pranav', age=19)
 ```
 
 ---
-## 📘 Operator Overloading in Python
+## Lecture 22:📘 Operator Overloading in Python
 
 ### 🔑 Key Takeaways
 
