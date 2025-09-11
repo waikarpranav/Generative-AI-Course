@@ -2293,7 +2293,7 @@ Think of a **class** like a **blueprint for a toy**.
 🔗 Real-world link: Any software system (ATM, shopping cart, video game) is built with OOP — modeling real-world things.
 
 ---
-## 🧑‍💻 Assignments
+### 🧑‍💻 Assignments
 
 **Q1. Create a `Circle` class with attribute `radius`. Add methods to calculate area and circumference.**
 
@@ -2316,5 +2316,838 @@ c1 = Circle(5)
 print("Area:", c1.area())                # 78.54
 print("Circumference:", c1.circumference())  # 31.41
 ```
+
+---
+
+## 📘 Inheritance in Python
+
+### 🔑 Key Takeaways
+
+- **Inheritance** allows one class (child/derived) to use attributes and methods of another class (parent/base).
+- **Single Inheritance** → one child inherits from one parent.
+- **Multiple Inheritance** → one child inherits from more than one parent.
+- `super()` is used to call parent’s constructor/methods inside the child class.
+- Child classes can **add new attributes/methods** beyond what they inherit.
+
+---
+### 📝 Detailed Notes
+
+#### 🔹 What is Inheritance?
+- A way to reuse code: child classes automatically get methods and attributes of the parent class.
+- **Real-world analogy**: children inherit property from parents, not vice versa.
+
+---
+### 🔹 Example: Parent Class (Car)
+
+```python
+class Car:
+    def __init__(self, windows, doors, engine_type):
+        self.windows = windows
+        self.doors = doors
+        self.engine_type = engine_type
+
+    def drive(self):
+        print(f"The person will drive the {self.engine_type} car")
+```
+
+Usage:
+
+```python
+car1 = Car(4, 5, "Petrol")
+car1.drive()   # Output: The person will drive the Petrol car
+```
+
+---
+#### 🔹 Example: Child Class (Tesla → Single Inheritance)
+
+```python
+class Tesla(Car):   # Tesla inherits Car
+    def __init__(self, windows, doors, engine_type, is_self_driving):
+        super().__init__(windows, doors, engine_type)   # Call parent constructor
+        self.is_self_driving = is_self_driving          # New attribute
+
+    def self_drive_feature(self):
+        print(f"Tesla supports self driving = {self.is_self_driving}")
+```
+
+Usage:
+
+```python
+tesla1 = Tesla(4, 5, "Electric", True)
+tesla1.drive()              # From parent class
+tesla1.self_drive_feature() # Tesla supports self driving = True
+```
+
+---
+### 🔹 Multiple Inheritance Example
+
+```python
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        print("Subclasses must implement this method")
+
+class Pet:
+    def __init__(self, owner):
+        self.owner = owner
+
+class Dog(Animal, Pet):   # Multiple inheritance
+    def __init__(self, name, owner):
+        Animal.__init__(self, name)
+        Pet.__init__(self, owner)
+
+    def speak(self):
+        return f"{self.name} says Woof!"
+```
+
+Usage:
+
+```python
+dog = Dog("Buddy", "Krush")
+print(dog.speak())        # Buddy says Woof!
+print(dog.owner)          # Krush
+```
+
+- **Note**: When methods overlap, Python follows **Method Resolution Order (MRO)** → child’s method > parent’s.
+    
+
+---
+### 👶 12-Year-Old Explanation
+
+Imagine your **dad has a car** 🚗. You (child) automatically get to use that car without buying a new one.
+
+- This is **single inheritance** → one parent, one child.  
+    If your **mom has a pet 🐶** and your dad has a car 🚗, you (child) get both!
+- This is **multiple inheritance** → one child, two parents.  
+    You can also add your own **new toys/gadgets** 🎮 → child class can add its own features.
+
+---
+### 💡 Mentor’s Tips
+- Always use `super().__init__()` for cleaner code when inheriting a single parent.
+- For multiple inheritance, call each parent explicitly (`Parent.__init__`).
+- Don’t overuse inheritance → sometimes **composition (has-a relationship)** is better than inheritance (is-a relationship).
+- **Mini exercise**:
+    - Create a `Bike` class with `wheels` and `type`.
+    - Create an `ElectricBike` class that inherits `Bike` and adds `battery_capacity`.
+    - Instantiate and print attributes.
+
+---
+### 🧑‍💻 Assignments
+
+#### Q1. Create a class `LibraryItem` with attributes `title` and `author`.
+
+Then create a child class `Book` that inherits `LibraryItem` and adds `pages`.
+
+**Solution:**
+
+```python
+class LibraryItem:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+class Book(LibraryItem):
+    def __init__(self, title, author, pages):
+        super().__init__(title, author)
+        self.pages = pages
+
+book1 = Book("Python 101", "John Doe", 350)
+print(book1.title, book1.author, book1.pages)
+# Output: Python 101 John Doe 350
+```
+
+---
+
+## 📘 Polymorphism in Python
+
+### 🔑 Key Takeaways
+
+- **Polymorphism** = "many forms" → same method name but different implementations.
+- Achieved in Python through **method overriding** and **abstract base classes (interfaces)**.
+- Allows objects of different classes to be treated as objects of a common superclass.
+- Increases flexibility, reusability, and maintainability of OOP code.
+
+---
+
+### 📝 Detailed Notes
+#### 🔹 Definition
+- Polymorphism lets you perform a **single action in different ways**.
+- Example: `speak()` method → Dog says "Woof", Cat says "Meow".
+
+---
+#### 🔹 Method Overriding Example
+
+```python
+class Animal:
+    def speak(self):
+        return "Some animal sound"
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+dog = Dog()
+cat = Cat()
+print(dog.speak())  # Woof!
+print(cat.speak())  # Meow!
+```
+
+👉 Both Dog and Cat override the same `speak()` method differently.
+
+---
+### 🔹 Polymorphism with Functions
+```python
+def animal_speak(animal):
+    print(animal.speak())
+
+animal_speak(dog)  # Woof!
+animal_speak(cat)  # Meow!
+```
+
+- Same function works on different objects (Dog, Cat).
+
+---
+### 🔹 Polymorphism with Shapes Example
+
+```python
+class Shape:
+    def area(self):
+        print("Area of shape")
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+def print_area(shape):
+    print(f"Area is {shape.area()}")
+
+rect = Rectangle(4, 5)
+circle = Circle(3)
+
+print_area(rect)    # Area is 20
+print_area(circle)  # Area is 28.26
+```
+
+---
+### 🔹 Abstract Base Classes (ABC)
+
+- Interfaces in Python are implemented as **abstract base classes**.
+- Force derived classes to implement a certain method.
+
+```python
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def start_engine(self):
+        pass
+
+class Car(Vehicle):
+    def start_engine(self):
+        return "Car engine started"
+
+class Motorcycle(Vehicle):
+    def start_engine(self):
+        return "Motorcycle engine started"
+
+car = Car()
+bike = Motorcycle()
+
+print(car.start_engine())   # Car engine started
+print(bike.start_engine())  # Motorcycle engine started
+```
+
+👉 Enforces consistency across subclasses.
+
+---
+### 👶 Think of **TV remotes** 📺:
+
+- The **button name** is the same → “Power”.
+- But the action depends on the TV brand → one TV may beep, another may flash a light, another may show a logo.  
+    That’s **polymorphism** → same action, different results.
+
+---
+### 💡 Mentor’s Tips
+
+- Use **polymorphism** when multiple classes share a method name but behave differently.
+- Don’t confuse it with **overloading** (same method with different parameters — not natively supported in Python).
+- **Method overriding** is the most common way to achieve polymorphism in Python
+- Abstract Base Classes are great for **enforcing contracts** in large projects.
+
+---
+
+### 🧑‍💻 Assignments
+
+#### Q1. Create a class `Employee` with method `work()`.Then create child classes `Developer` and `Designer` that override the `work()` method.
+
+**Solution:**
+
+```python
+class Employee:
+    def work(self):
+        return "Working..."
+
+class Developer(Employee):
+    def work(self):
+        return "Writing code"
+
+class Designer(Employee):
+    def work(self):
+        return "Designing UI"
+
+dev = Developer()
+des = Designer()
+
+print(dev.work())  # Writing code
+print(des.work())  # Designing UI
+```
+
+---
+
+## 📘 Encapsulation in Python
+### 🔑 Key Takeaways
+
+- **Encapsulation** = bundling data (variables) + methods (functions) in one unit (class).
+- Uses **access modifiers** → `public`, `protected`, and `private`.
+- **Getter** methods → safely access private variables.
+- **Setter** methods → safely update private variables (with conditions if needed).
+- Prevents accidental misuse of sensitive data, improves security & code maintainability.
+
+---
+### 📝 Detailed Notes
+#### 🔹 Definition
+Encapsulation is the process of:
+- Wrapping variables and methods into a single class.
+- Restricting direct access to sensitive variables.
+
+👉 Think: controlling **what data is visible** and **how it is modified**.
+
+---
+### 🔹 Access Modifiers in Python
+1. **Public** → No underscore (`self.name`).
+    - Can be accessed anywhere outside the class.
+2. **Protected** → Single underscore (`self._name`).
+    - Should be accessed **only inside class or subclasses** (not enforced, but convention).
+3. **Private** → Double underscore (`self.__name`).
+    - Cannot be directly accessed outside the class.
+    - Python renames it internally as `_ClassName__variable`.
+
+---
+#### 🔹 Public Variable Example
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name      # public
+        self.age = age        # public
+
+p = Person("Krush", 34)
+print(p.name)   # ✅ Accessible
+print(p.age)    # ✅ Accessible
+```
+
+---
+#### 🔹 Private Variable Example
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.__name = name    # private
+        self.__age = age      # private
+
+p = Person("Krush", 34)
+print(p.__name)  # ❌ Error
+print(p.__age)   # ❌ Error
+
+# Internally, stored as:
+print(p._Person__name)  # ✅ Krush
+print(p._Person__age)   # ✅ 34
+```
+
+⚠️ Accessing `_Person__name` is possible but **bad practice**.
+
+---
+#### 🔹 Protected Variable Example (Accessible in subclass)
+```python
+class Person:
+    def __init__(self, name):
+        self._name = name   # protected
+
+class Employee(Person):
+    def show_name(self):
+        return self._name   # ✅ accessible inside subclass
+
+emp = Employee("Krush")
+print(emp.show_name())  # Krush
+```
+
+---
+### 🔹 Getter and Setter Methods
+
+Encapsulation uses **getter** (to read) and **setter** (to update safely).
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.__name = name
+        self.__age = age
+
+    # Getter for name
+    def get_name(self):
+        return self.__name
+
+    # Setter for name
+    def set_name(self, name):
+        self.__name = name
+
+    # Getter for age
+    def get_age(self):
+        return self.__age
+
+    # Setter for age with validation
+    def set_age(self, age):
+        if age > 0:
+            self.__age = age
+        else:
+            print("Age cannot be negative")
+
+# Usage
+p = Person("Krush", 34)
+print(p.get_name())   # Krush
+print(p.get_age())    # 34
+
+p.set_age(35)
+print(p.get_age())    # 35
+
+p.set_age(-5)         # Age cannot be negative
+```
+
+---
+### 👶 12-Year-Old Explanation
+
+Imagine a **washing machine** 🧺:
+- You only see **buttons** (Start, Pause, Wash).
+- You **cannot touch the motor or wires inside** (hidden/private).
+- The company allows you to press buttons (**getter/setter**) instead of messing with the insides.
+
+That’s **encapsulation** → hide sensitive stuff, give safe access.
+
+---
+### 💡 Mentor’s Tips
+- ✅ Always use **getter/setter** for sensitive variables.
+- ❌ Don’t directly access private vars like `_Class__var` → bad practice.
+- 🔑 Use encapsulation when designing **secure and maintainable** classes (e.g., banking system, login info).
+- Real-world analogy: **ATM Machine** 💳
+    - You don’t handle cash directly inside the bank vault.
+    - You only interact with **buttons & screen (methods)**.
+
+---
+### 🧑‍💻 Assignments
+
+#### Q1. Create a `Student` class with private variables `__name` and `__marks`.Add getter and setter methods for both.The setter for marks should ensure marks are between `0` and `100`.
+
+**Solution:**
+
+```python
+class Student:
+    def __init__(self, name, marks):
+        self.__name = name
+        self.__marks = marks
+
+    def get_name(self):
+        return self.__name
+
+    def set_name(self, name):
+        self.__name = name
+
+    def get_marks(self):
+        return self.__marks
+
+    def set_marks(self, marks):
+        if 0 <= marks <= 100:
+            self.__marks = marks
+        else:
+            print("Invalid marks")
+
+# Usage
+s = Student("Pranav", 85)
+print(s.get_name(), s.get_marks())  # Pranav 85
+
+s.set_marks(95)
+print(s.get_marks())  # 95
+
+s.set_marks(120)      # Invalid marks
+```
+
+---
+
+## 📘 Abstraction in Python
+
+### 🔑 Key Takeaways
+
+- **Abstraction** hides complex implementation details and shows only essential features.
+- Implemented in Python using **Abstract Base Classes (ABC)** and **abstract methods**.
+- Abstract methods are **declared but not implemented** in the base class.
+- Child classes **must provide their own implementation** for abstract methods.
+- Abstraction reduces **complexity** and improves **code flexibility & reusability**.
+
+---
+### 📝 Detailed Notes
+#### 🔹 What is Abstraction?
+- Concept of **hiding how something works internally**, while exposing only **what it does**.
+- Reduces programming complexity → focus on usage, not implementation.
+- **Examples**:
+    - Washing machine → you press buttons, but don’t see the inner motor process.
+    - Mobile phone → you tap "call", but don’t see signal transmission logic.
+    - Laptop → "Shut down" button hides OS-level cleanup processes.
+
+---
+### 🔹 Abstract Classes and Methods
+
+- Abstract classes: created using `ABC` module.
+- Abstract methods: defined but **no implementation** (empty body).
+- Child classes that inherit from the abstract class **must implement** these methods.
+
+---
+#### 🔹 Example Code
+
+```python
+from abc import ABC, abstractmethod
+
+# Abstract Base Class
+class Vehicle(ABC):
+    def drive(self):
+        print("The vehicle is used for driving.")
+
+    @abstractmethod
+    def start_engine(self):
+        pass  # Abstract method (no implementation)
+
+# Child class implementing the abstract method
+class Car(Vehicle):
+    def start_engine(self):
+        print("Car engine started.")
+
+# Function to operate vehicle
+def operate_vehicle(vehicle):
+    vehicle.start_engine()
+    vehicle.drive()
+
+# Usage
+car = Car()
+operate_vehicle(car)
+```
+
+**Output:**
+
+```
+Car engine started.
+The vehicle is used for driving.
+```
+
+---
+
+### 👶 12-Year-Old Explanation
+
+Think of a **TV remote** 📺:
+- You see buttons (power, volume, channel).
+- When you press them, things happen → TV turns on, sound changes.
+- But you don’t see the **circuit boards or signals** inside.
+
+👉 That’s abstraction: you use simple buttons, while the **complicated wiring is hidden**.
+
+---
+### 💡 Mentor’s Tips
+
+- ✅ Use **abstraction** to design flexible code frameworks.
+- ❌ Don’t put implementation details in the abstract class.
+- 🔑 Abstract methods = a **contract** → every subclass must follow it.
+- **Industry example**: Payment gateways.
+    - Abstract method: `process_payment()`.
+    - Child classes: implement for `CreditCard`, `PayPal`, `UPI`.
+
+
+---
+### 🧑‍💻 Assignments
+
+#### Q1. Create an abstract class `Animal` with an abstract method `make_sound()`.Implement `Dog` and `Cat` classes that override `make_sound()` differently.
+
+**Solution:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def make_sound(self):
+        pass
+
+class Dog(Animal):
+    def make_sound(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def make_sound(self):
+        return "Meow!"
+
+# Usage
+dog = Dog()
+cat = Cat()
+
+print(dog.make_sound())  # Woof!
+print(cat.make_sound())  # Meow!
+```
+
+---
+Perfect 🙌 Thanks for sharing the full transcript of the **Magic Methods** lecture.  
+Here’s the **complete Obsidian note** in your finalized template:
+
+---
+
+## 📘 Magic Methods (Dunder Methods) in Python
+
+### 🔑 Key Takeaways
+- Magic methods = **dunder methods** (start & end with `__`).
+- They define how objects behave with **built-in operations** (arithmetic, comparison, printing, etc.).
+- Examples:
+    - `__init__`: constructor, runs when object is created.
+    - `__str__`: defines string representation (user-friendly).
+    - `__repr__`: official string representation (debugging).
+
+- Default implementations exist, but you can **override them** for custom behavior.
+- Helps in **operator overloading** and customizing how objects interact.
+
+---
+### 📝 Detailed Notes
+#### 🔹 What are Magic Methods?
+- Special methods in Python surrounded by **double underscores**.
+- Automatically invoked by Python when certain operations are performed.
+- Purpose: make classes behave like **built-in types**.
+---
+### 🔹 Common Magic Methods
+
+1. **`__init__`** → constructor, initializes object.
+2. **`__str__`** → user-readable string (used in `print()`).
+3. **`__repr__`** → developer-readable string (used in debugging/console).
+4. Many more: `__add__`, `__len__`, `__eq__`, etc.
+
+---
+#### 🔹 Example 1: Basic Magic Methods
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+# Object creation calls __init__
+p1 = Person("Krish", 34)
+print(p1)  # Default output: <__main__.Person object at 0x000...>
+```
+
+---
+#### 🔹 Example 2: Overriding `__str__`
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"{self.name}, {self.age} years old"
+
+p1 = Person("Krish", 34)
+print(p1)
+```
+
+**Output:**
+```
+Krish, 34 years old
+```
+
+---
+#### 🔹 Example 3: Overriding `__repr__`
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __repr__(self):
+        return f"Person(name='{self.name}', age={self.age})"
+
+p1 = Person("Krish", 34)
+print(repr(p1))
+```
+**Output:**
+```
+Person(name='Krish', age=34)
+```
+
+---
+#### 🔹 Key Difference between `__str__` and `__repr__`
+- `__str__`: readable for **users**.
+- `__repr__`: readable for **developers/debugging**.
+- If `__str__` is missing, Python falls back to `__repr__`.
+
+---
+### 👶 12-Year-Old Explanation
+Imagine your **school report card**:
+- On the **cover page**, it just says:  
+    _"Pranav, Class 10"_ → this is like `__str__` (simple, user-friendly).
+- Inside the **teacher’s file**, it says:  
+    _"Student(name='Pranav', age=15, grade='A')"_ → this is like `__repr__` (detailed, for official use).
+
+👉 Magic methods are just **hidden shortcuts** that let you decide how your object should look/behave in different situations.
+
+---
+### 💡 Mentor’s Tips
+- ✅ Always implement `__repr__` in custom classes → makes debugging easier.
+- ✅ Use `__str__` when you want user-friendly display.
+- ❌ Avoid unnecessary overriding → only override when needed.
+- 🔗 Magic methods connect strongly with **operator overloading** (next lecture).
+
+🔎 **Mini Practice Exercise**
+- Create a `Book` class.
+    - Use `__init__` to set `title` and `author`.
+    - Override `__str__` to return `"Title by Author"`.
+    - Override `__repr__` to return `"Book(title='...', author='...')"`
+
+---
+### 🧑‍💻 Assignments
+#### Q1. Create a `Student` class with `__init__`, `__str__`, and `__repr__`.`__str__` should print → `"Student Name: X, Age: Y"`.`__repr__` should print → `"Student(name='X', age=Y)"`.
+
+**Solution:**
+```python
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"Student Name: {self.name}, Age: {self.age}"
+
+    def __repr__(self):
+        return f"Student(name='{self.name}', age={self.age})"
+
+s1 = Student("Pranav", 19)
+print(s1)         # Student Name: Pranav, Age: 19
+print(repr(s1))   # Student(name='Pranav', age=19)
+```
+
+---
+## 📘 Operator Overloading in Python
+
+### 🔑 Key Takeaways
+
+- Operator overloading allows **custom behavior for standard operators** (`+`, `-`, `*`, `==`, `>`, etc.) on user-defined objects.
+- Implemented using **magic (dunder) methods**:
+    - `__add__` → `+`
+    - `__sub__` → `-`
+    - `__mul__` → `*`
+    - `__truediv__` → `/`
+    - `__eq__` → `==`
+    - `__gt__` → `>`
+
+- Useful for **mathematical operations on objects** like vectors, matrices, complex numbers, etc.
+- Magic methods can be **overridden** to customize object behavior.
+
+---
+### 📝 Detailed Notes
+### 🔹 What is Operator Overloading?
+- Customizes the behavior of standard Python operators for **user-defined classes**.
+- Achieved by **overriding corresponding magic methods**.
+- Example: adding two vectors using `+` operator.
+
+---
+### 🔹 Common Magic Methods for Operator Overloading
+
+| Operator | Magic Method  | Purpose                 |
+| -------- | ------------- | ----------------------- |
+| `+`      | `__add__`     | Addition                |
+| `-`      | `__sub__`     | Subtraction             |
+| `*`      | `__mul__`     | Multiplication          |
+| `/`      | `__truediv__` | Division                |
+| `==`     | `__eq__`      | Equality comparison     |
+| `<`      | `__lt__`      | Less than comparison    |
+| `>`      | `__gt__`      | Greater than comparison |
+
+---
+#### 🔹 Example 1: Vector Addition
+```python
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+
+v1 = Vector(2, 3)
+v2 = Vector(4, 5)
+
+print(v1 + v2)   # Vector(6, 8)
+print(v1 - v2)   # Vector(-2, -2)
+print(v1 * 3)    # Vector(6, 9)
+print(v1 == v2)  # False
+```
+
+---
+#### 🔹 How It Works
+1. `v1 + v2` → Calls `v1.__add__(v2)` → returns a new `Vector` object.
+2. `v1 - v2` → Calls `v1.__sub__(v2)` → returns a new `Vector` object.
+3. `v1 * 3` → Calls `v1.__mul__(3)` → scales the vector.
+4. `v1 == v2` → Calls `v1.__eq__(v2)` → returns `True` or `False`.
+5. `__repr__` gives **developer-friendly string** when printing the object.
+    
+
+---
+### 🔹 Real-World Analogy
+
+- Think of a **calculator**:
+    - `+` for numbers is standard addition.
+    - If you give it **matrices or vectors**, it won’t work unless you **teach the calculator how to handle them** → operator overloading.
+
+---
+#### 🔹 Assignments / Practice
+
+1. **Complex Numbers**:
+    - Implement `__add__`, `__sub__`, `__mul__` for a `ComplexNumber` class.
+    - Real + Imaginary operations should follow standard math rules.
+2. **Matrix Operations**:
+    - Implement `+` and `*` for a `Matrix` class using operator overloading.
+3. **Comparison Overloading**:
+    - Create a `Student` class.
+    - Overload `>` to compare students by marks.
+---
+#### 🔹 Mentor’s Tips
+- ✅ Always implement `__repr__` → makes debugging easier.
+- ✅ Use operator overloading only when it **makes sense for your objects**.
+- ❌ Avoid overloading operators in ways that are **unexpected for users**.
 
 ---
